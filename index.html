@@ -110,7 +110,7 @@
         <div>
           <form>
             <label>
-              name
+              Name
               <input type="text" />
             </label>
 
@@ -267,11 +267,11 @@
           str += `<li>
             <span>
 							<span>${cart[i].name}</span>
-							<span>${cart[i].price}</span> 
+							<span>$${cart[i].price}</span> 
 							<span>each x</span>
 							<span>${cart[i].qty}</span> 
 							<span> = </span>  
-							<span>${(cart[i].qty * cart[i].price).toFixed(2)}</span>
+							<span>$${(cart[i].qty * cart[i].price).toFixed(2)}</span>
 						</span>
             
 						<span>
@@ -293,7 +293,7 @@
         for (let i = 0; i < cart.length; i += 1) {
           total += cart[i].price * cart[i].qty;
         }
-        return total.toFixed(2);
+        return `$${total.toFixed(2)}`;
       }
 
       function updateCart(name, qty) {
@@ -309,6 +309,62 @@
 
       showCart();
       getTotal();
+
+      // TickerTape web component
+      class TickerTape extends HTMLElement {
+        constructor() {
+          super();
+          this.attachShadow({ mode: "open" });
+          const template = document.createElement("template");
+          template.innerHTML = `
+      <style>
+        .ticker-container {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+          white-space: nowrap;
+          overflow: hidden;
+					width: 100%;
+					font-size: 5rem;
+        }
+      </style>
+      <div class="ticker-container"></div>
+    `;
+          const shadowRoot = this.shadowRoot;
+          shadowRoot.appendChild(template.content.cloneNode(true));
+
+          this.text = "";
+          this.currentIndex = 0;
+          this.animationSpeed = 200;
+          this.startTicker();
+        }
+
+        set textContent(newText) {
+          this.text = newText;
+          this.currentIndex = 0;
+          this.updateTicker();
+        }
+
+        updateTicker() {
+          const tickerContainer =
+            this.shadowRoot.querySelector(".ticker-container");
+          tickerContainer.textContent =
+            this.text.substring(this.currentIndex) +
+            this.text.substring(0, this.currentIndex);
+          this.currentIndex = (this.currentIndex + 1) % this.text.length;
+        }
+
+        startTicker() {
+          setInterval(() => {
+            this.updateTicker();
+          }, this.animationSpeed);
+        }
+      }
+
+      customElements.define("ticker-tape", TickerTape);
+
+      const tickerTape = document.querySelector("ticker-tape");
+      tickerTape.textContent = "...Color.com is awesome...";
     </script>
   </body>
 </html>

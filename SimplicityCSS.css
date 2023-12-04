@@ -38,7 +38,7 @@ body {
 }
 
 /* section */
-section:not(#nav, #popular, #about, #footer) {
+section:not(#nav, #banner, #popular, #about, #footer) {
   min-height: 100vh;
   padding: 2em;
   background-color: var(--color-foreground);
@@ -46,6 +46,14 @@ section:not(#nav, #popular, #about, #footer) {
   border-radius: 4px;
   position: relative;
   box-shadow: 2 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1em;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
 }
 
 /* container */
@@ -62,6 +70,8 @@ h3,
 h4,
 h5,
 h6 {
+  display: flex;
+  justify-content: center;
   color: var(--color-primary);
   margin-top: 1em;
   margin-bottom: 0.5em;
@@ -284,8 +294,20 @@ th {
 
 /* navigation bar styles */
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: var(--color-foreground);
   padding: 0.5em 1em;
+}
+
+.navbar a {
+  flex-grow: 1;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 0.5em;
+  padding: 0.25em 0;
 }
 
 .navbar ul {
@@ -297,11 +319,6 @@ th {
 
 .navbar li {
   margin-right: 1em;
-}
-
-.navbar a {
-  color: #fff;
-  text-decoration: none;
 }
 
 .navbar a:hover {
@@ -586,6 +603,7 @@ th {
   margin: 0;
 }
 
+/* swatches */
 .swatch {
   width: 100px;
   height: 100px;
@@ -593,6 +611,12 @@ th {
   border: 1px solid #ccc;
   display: inline-block;
   cursor: pointer;
+}
+
+#swatches p {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2em;
 }
 
 /* shopping cart form elements */
@@ -627,4 +651,17 @@ th {
 
 #cart li button:hover {
   background-color: #0056b3;
+}
+
+/* contact form elements */
+#contact form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#contact label {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
